@@ -2,6 +2,7 @@
 
 following [Build a Next.js AI Chatbot with Vercel AI SDK & Nvidia NIM](https://prismic.io/blog/nextjs-ai-chatbot)
 
+---
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
