@@ -2,6 +2,11 @@
 
 following [Build a Next.js AI Chatbot with Vercel AI SDK & Nvidia NIM](https://prismic.io/blog/nextjs-ai-chatbot)
 
+## changes from the og
+
+- using TS/TSX instead of JS/JSX
+- replaced usage of the deprecated/experimental AI SDK RSC (`ai/rsc` & `@ai-sdk/rsc`) modules with AI SDK UI (`ai` & `@ai-sdk/*`) modules
+
 ---
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
