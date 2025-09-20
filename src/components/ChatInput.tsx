@@ -21,7 +21,12 @@ export default function ChatInput({
   handleKeyDown,
 }: ChatInputProps) {
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+        handleSubmit()
+      }}
+    >
       <div>
         <textarea
           value={input}
