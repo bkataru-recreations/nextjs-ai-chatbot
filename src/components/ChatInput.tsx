@@ -1,3 +1,5 @@
+import type { ChatStatus } from "ai"
+
 import Button from "@/components/Button"
 
 // export default function ChatInput({
@@ -8,6 +10,7 @@ import Button from "@/components/Button"
 // }) {
 
 interface ChatInputProps {
+  status: ChatStatus
   input: string
   setInput: (input: string) => void
   handleSubmit: () => void
@@ -15,6 +18,7 @@ interface ChatInputProps {
 }
 
 export default function ChatInput({
+  status,
   input,
   setInput,
   handleSubmit,
@@ -32,10 +36,11 @@ export default function ChatInput({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
+          disabled={status !== "ready"}
           placeholder="Type your message here..."
           title="Chat input"
         />
-        <Button disabled={input.length === 0} />
+        <Button disabled={input.length === 0 || status !== "ready"} />
       </div>
     </form>
   )

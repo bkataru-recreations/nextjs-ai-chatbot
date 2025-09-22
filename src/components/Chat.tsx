@@ -1,11 +1,15 @@
 "use client"
 
 import { useState } from "react"
+import { useChat } from "@ai-sdk/react"
+import { DefaultChatTransport } from "ai"
+
 import remarkGfm from "remark-gfm"
-import ChatInput from "./ChatInput"
 import { FaRobot } from "react-icons/fa"
 import { FaUserAstronaut } from "react-icons/fa6"
 import ReactMarkdown from "react-markdown"
+
+import ChatInput from "./ChatInput"
 
 interface Message {
   role: string
@@ -13,18 +17,20 @@ interface Message {
 }
 
 export default function Chat() {
-  const [messages, setMessages] = useState<Message[]>([])
+  const { messages, sendMessage, status } = useChat({
+    transport: new DefaultChatTransport({
+      api: "/api/chat",
+    }),
+  })
   const [input, setInput] = useState("")
 
   const remarkPlugins = [remarkGfm]
 
   const handleSubmit = () => {
-    if (input.trim().length === 0) return
-
-    const newMessages = [...messages, { role: "user", content: input }]
-
-    setMessages(newMessages)
-    setInput("")
+    if (input.trim()) {
+      sendMessage({ text: input })
+      setInput("")
+    }
   }
 
   const handleKeyDown = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -42,16 +48,18 @@ export default function Chat() {
 
   return (
     <div>
-      {messages.map((m, i) => (
-        <div key={`${m.role}-${i}`}>
+      {messages.map((message) => (
+        <div key={message.id}>
           <div>
-            {m.role === "user" ? <FaUserAstronaut /> : <FaRobot />}
+            {message.role === "user" ? <FaUserAstronaut /> : <FaRobot />}
             {/* user and AI icons go here */}
           </div>
 
           <div>
             <ReactMarkdown remarkPlugins={remarkPlugins}>
-              {m.content}
+              {message.parts
+                .map((part) => (part.type === "text" ? part.text : ""))
+                .join("")}
               {/* chat messages go here */}
             </ReactMarkdown>
           </div>
@@ -59,6 +67,7 @@ export default function Chat() {
       ))}
 
       <ChatInput
+        status={status}
         input={input}
         setInput={setInput}
         handleSubmit={handleSubmit}

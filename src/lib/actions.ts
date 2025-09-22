@@ -1,3 +1,7 @@
+// DEPRECATED
+// we're keeping this file for reference, but it's no longer used in the app
+// the logic is moved to a server side route at src/app/api/chat/route.ts
+
 "use server"
 
 import { createOpenAI } from "@ai-sdk/openai"
